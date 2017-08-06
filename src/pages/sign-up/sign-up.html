@@ -1,0 +1,62 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Sign up</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <!-- https://javebratt.com/firebase-phone-authentication/ -->
+  <div id="recaptcha-container"></div>
+
+  <ion-grid>
+    <div padding>
+      <ion-segment [(ngModel)]="signUpMethod">
+        <ion-segment-button value="phone">
+          Phone
+        </ion-segment-button>
+        <ion-segment-button value="puppies">
+          Email
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <div [ngSwitch]="signUpMethod">
+      <div *ngSwitchCase="'phone'">
+      <form [formGroup]="signUpPhoneForm" (submit)="onContinue()" novalidate>
+        <ion-row justify-content-center>
+          <ion-col col-10>
+            <ion-row>
+              <ion-col tappable (click)="pickCountryCode()" col-auto>
+                <p class="test">{{ countryCodeValue }} {{ phoneCodeValue }}</p>
+              </ion-col>
+              <ion-col>
+                <ion-item class="noLeftPadding">
+                  <ion-input type="tel" value="{{phoneInputValue}}" formControlName="phone" clearInput=true placeholder="phone" class="phone"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+        <p text-center>
+          google wants me to warn you that they are using your phone number for some "spam prevention database"
+        </p>
+        <div text-center>
+          <button ion-button round type="submit" [disabled]="!phoneFormValid">
+            Continue
+          </button>
+        </div>
+      </form>
+      </div>
+
+      <ion-list *ngSwitchCase="'puppies'">
+        <ion-item>
+
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-grid>
+</ion-content>
