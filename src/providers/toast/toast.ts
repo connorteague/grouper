@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
 
-/*
-  Generated class for the ToastProvider provider.
+import { ToastController } from 'ionic-angular';
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
 @Injectable()
 export class ToastProvider {
 
-  constructor(public http: Http) {
-    console.log('Hello ToastProvider Provider');
+  constructor(
+    public toastCtrl: ToastController)
+    {
+
+  }
+
+  loginToast() {
+  let toast = this.toastCtrl.create({
+    message: 'User was added successfully',
+    duration: 3000
+  });
+  toast.present();
   }
 
 }

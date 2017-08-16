@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { IonicPage, NavController, NavParams, Loading, LoadingController,
   AlertController} from 'ionic-angular';
 
 import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
+// import * as firebase from 'firebase/app';
 
 import { AuthProvider } from '../../providers/auth/auth';
 
-import { Sim } from '@ionic-native/sim';
+import { PhoneInfoProvider } from '../../providers/phone-info/phone-info';
 
-import { UserInfoProvider } from '../../providers/user-info/user-info';
 
 
 export const countryCodes = {"BD": {"countryName": "Bangladesh", "phoneCode": "880"}, "BE": {"countryName": "Belgium", "phoneCode": "32"}, "BF": {"countryName": "Burkina Faso", "phoneCode": "226"}, "BG": {"countryName": "Bulgaria", "phoneCode": "359"}, "BA": {"countryName": "Bosnia and Herzegovina", "phoneCode": "387"}, "BB": {"countryName": "Barbados", "phoneCode": "+1-246"}, "WF": {"countryName": "Wallis and Futuna", "phoneCode": "681"}, "BL": {"countryName": "Saint Barthelemy", "phoneCode": "590"}, "BM": {"countryName": "Bermuda", "phoneCode": "+1-441"}, "BN": {"countryName": "Brunei", "phoneCode": "673"}, "BO": {"countryName": "Bolivia", "phoneCode": "591"}, "BH": {"countryName": "Bahrain", "phoneCode": "973"}, "BI": {"countryName": "Burundi", "phoneCode": "257"}, "BJ": {"countryName": "Benin", "phoneCode": "229"}, "BT": {"countryName": "Bhutan", "phoneCode": "975"}, "JM": {"countryName": "Jamaica", "phoneCode": "+1-876"}, "BV": {"countryName": "Bouvet Island", "phoneCode": ""}, "BW": {"countryName": "Botswana", "phoneCode": "267"}, "WS": {"countryName": "Samoa", "phoneCode": "685"}, "BQ": {"countryName": "Bonaire, Saint Eustatius and Saba ", "phoneCode": "599"}, "BR": {"countryName": "Brazil", "phoneCode": "55"}, "BS": {"countryName": "Bahamas", "phoneCode": "+1-242"}, "JE": {"countryName": "Jersey", "phoneCode": "+44-1534"}, "BY": {"countryName": "Belarus", "phoneCode": "375"}, "BZ": {"countryName": "Belize", "phoneCode": "501"}, "RU": {"countryName": "Russia", "phoneCode": "7"}, "RW": {"countryName": "Rwanda", "phoneCode": "250"}, "RS": {"countryName": "Serbia", "phoneCode": "381"}, "TL": {"countryName": "East Timor", "phoneCode": "670"}, "RE": {"countryName": "Reunion", "phoneCode": "262"}, "TM": {"countryName": "Turkmenistan", "phoneCode": "993"}, "TJ": {"countryName": "Tajikistan", "phoneCode": "992"}, "RO": {"countryName": "Romania", "phoneCode": "40"}, "TK": {"countryName": "Tokelau", "phoneCode": "690"}, "GW": {"countryName": "Guinea-Bissau", "phoneCode": "245"}, "GU": {"countryName": "Guam", "phoneCode": "+1-671"}, "GT": {"countryName": "Guatemala", "phoneCode": "502"}, "GS": {"countryName": "South Georgia and the South Sandwich Islands", "phoneCode": ""}, "GR": {"countryName": "Greece", "phoneCode": "30"}, "GQ": {"countryName": "Equatorial Guinea", "phoneCode": "240"}, "GP": {"countryName": "Guadeloupe", "phoneCode": "590"}, "JP": {"countryName": "Japan", "phoneCode": "81"}, "GY": {"countryName": "Guyana", "phoneCode": "592"}, "GG": {"countryName": "Guernsey", "phoneCode": "+44-1481"}, "GF": {"countryName": "French Guiana", "phoneCode": "594"}, "GE": {"countryName": "Georgia", "phoneCode": "995"}, "GD": {"countryName": "Grenada", "phoneCode": "+1-473"}, "GB": {"countryName": "United Kingdom", "phoneCode": "44"}, "GA": {"countryName": "Gabon", "phoneCode": "241"}, "SV": {"countryName": "El Salvador", "phoneCode": "503"}, "GN": {"countryName": "Guinea", "phoneCode": "224"}, "GM": {"countryName": "Gambia", "phoneCode": "220"}, "GL": {"countryName": "Greenland", "phoneCode": "299"}, "GI": {"countryName": "Gibraltar", "phoneCode": "350"}, "GH": {"countryName": "Ghana", "phoneCode": "233"}, "OM": {"countryName": "Oman", "phoneCode": "968"}, "TN": {"countryName": "Tunisia", "phoneCode": "216"}, "IL": {"countryName": "Israel", "phoneCode": "972"}, "JO": {"countryName": "Jordan", "phoneCode": "962"}, "HR": {"countryName": "Croatia", "phoneCode": "385"}, "HT": {"countryName": "Haiti", "phoneCode": "509"}, "HU": {"countryName": "Hungary", "phoneCode": "36"}, "HK": {"countryName": "Hong Kong", "phoneCode": "852"}, "HN": {"countryName": "Honduras", "phoneCode": "504"}, "HM": {"countryName": "Heard Island and McDonald Islands", "phoneCode": " "}, "VE": {"countryName": "Venezuela", "phoneCode": "58"}, "PR": {"countryName": "Puerto Rico", "phoneCode": "+1-787 and 1-939"}, "PS": {"countryName": "Palestinian Territory", "phoneCode": "970"}, "PW": {"countryName": "Palau", "phoneCode": "680"}, "PT": {"countryName": "Portugal", "phoneCode": "351"}, "SJ": {"countryName": "Svalbard and Jan Mayen", "phoneCode": "47"}, "PY": {"countryName": "Paraguay", "phoneCode": "595"}, "IQ": {"countryName": "Iraq", "phoneCode": "964"}, "PA": {"countryName": "Panama", "phoneCode": "507"}, "PF": {"countryName": "French Polynesia", "phoneCode": "689"}, "PG": {"countryName": "Papua New Guinea", "phoneCode": "675"}, "PE": {"countryName": "Peru", "phoneCode": "51"}, "PK": {"countryName": "Pakistan", "phoneCode": "92"}, "PH": {"countryName": "Philippines", "phoneCode": "63"}, "PN": {"countryName": "Pitcairn", "phoneCode": "870"}, "PL": {"countryName": "Poland", "phoneCode": "48"}, "PM": {"countryName": "Saint Pierre and Miquelon", "phoneCode": "508"}, "ZM": {"countryName": "Zambia", "phoneCode": "260"}, "EH": {"countryName": "Western Sahara", "phoneCode": "212"}, "EE": {"countryName": "Estonia", "phoneCode": "372"}, "EG": {"countryName": "Egypt", "phoneCode": "20"}, "ZA": {"countryName": "South Africa", "phoneCode": "27"}, "EC": {"countryName": "Ecuador", "phoneCode": "593"}, "IT": {"countryName": "Italy", "phoneCode": "39"}, "VN": {"countryName": "Vietnam", "phoneCode": "84"}, "SB": {"countryName": "Solomon Islands", "phoneCode": "677"}, "ET": {"countryName": "Ethiopia", "phoneCode": "251"}, "SO": {"countryName": "Somalia", "phoneCode": "252"}, "ZW": {"countryName": "Zimbabwe", "phoneCode": "263"}, "SA": {"countryName": "Saudi Arabia", "phoneCode": "966"}, "ES": {"countryName": "Spain", "phoneCode": "34"}, "ER": {"countryName": "Eritrea", "phoneCode": "291"}, "ME": {"countryName": "Montenegro", "phoneCode": "382"}, "MD": {"countryName": "Moldova", "phoneCode": "373"}, "MG": {"countryName": "Madagascar", "phoneCode": "261"}, "MF": {"countryName": "Saint Martin", "phoneCode": "590"}, "MA": {"countryName": "Morocco", "phoneCode": "212"}, "MC": {"countryName": "Monaco", "phoneCode": "377"}, "UZ": {"countryName": "Uzbekistan", "phoneCode": "998"}, "MM": {"countryName": "Myanmar", "phoneCode": "95"}, "ML": {"countryName": "Mali", "phoneCode": "223"}, "MO": {"countryName": "Macao", "phoneCode": "853"}, "MN": {"countryName": "Mongolia", "phoneCode": "976"}, "MH": {"countryName": "Marshall Islands", "phoneCode": "692"}, "MK": {"countryName": "Macedonia", "phoneCode": "389"}, "MU": {"countryName": "Mauritius", "phoneCode": "230"}, "MT": {"countryName": "Malta", "phoneCode": "356"}, "MW": {"countryName": "Malawi", "phoneCode": "265"}, "MV": {"countryName": "Maldives", "phoneCode": "960"}, "MQ": {"countryName": "Martinique", "phoneCode": "596"}, "MP": {"countryName": "Northern Mariana Islands", "phoneCode": "+1-670"}, "MS": {"countryName": "Montserrat", "phoneCode": "+1-664"}, "MR": {"countryName": "Mauritania", "phoneCode": "222"}, "IM": {"countryName": "Isle of Man", "phoneCode": "+44-1624"}, "UG": {"countryName": "Uganda", "phoneCode": "256"}, "MY": {"countryName": "Malaysia", "phoneCode": "60"}, "MX": {"countryName": "Mexico", "phoneCode": "52"}, "AT": {"countryName": "Austria", "phoneCode": "43"}, "FR": {"countryName": "France", "phoneCode": "33"}, "IO": {"countryName": "British Indian Ocean Territory", "phoneCode": "246"}, "SH": {"countryName": "Saint Helena", "phoneCode": "290"}, "FI": {"countryName": "Finland", "phoneCode": "358"}, "FJ": {"countryName": "Fiji", "phoneCode": "679"}, "FK": {"countryName": "Falkland Islands", "phoneCode": "500"}, "FM": {"countryName": "Micronesia", "phoneCode": "691"}, "FO": {"countryName": "Faroe Islands", "phoneCode": "298"}, "NI": {"countryName": "Nicaragua", "phoneCode": "505"}, "NL": {"countryName": "Netherlands", "phoneCode": "31"}, "NO": {"countryName": "Norway", "phoneCode": "47"}, "NA": {"countryName": "Namibia", "phoneCode": "264"}, "NC": {"countryName": "New Caledonia", "phoneCode": "687"}, "NE": {"countryName": "Niger", "phoneCode": "227"}, "NF": {"countryName": "Norfolk Island", "phoneCode": "672"}, "NG": {"countryName": "Nigeria", "phoneCode": "234"}, "NZ": {"countryName": "New Zealand", "phoneCode": "64"}, "NP": {"countryName": "Nepal", "phoneCode": "977"}, "NR": {"countryName": "Nauru", "phoneCode": "674"}, "NU": {"countryName": "Niue", "phoneCode": "683"}, "CK": {"countryName": "Cook Islands", "phoneCode": "682"}, "XK": {"countryName": "Kosovo", "phoneCode": ""}, "CI": {"countryName": "Ivory Coast", "phoneCode": "225"}, "CH": {"countryName": "Switzerland", "phoneCode": "41"}, "CO": {"countryName": "Colombia", "phoneCode": "57"}, "CN": {"countryName": "China", "phoneCode": "86"}, "CM": {"countryName": "Cameroon", "phoneCode": "237"}, "CL": {"countryName": "Chile", "phoneCode": "56"}, "CC": {"countryName": "Cocos Islands", "phoneCode": "61"}, "CA": {"countryName": "Canada", "phoneCode": "1"}, "LB": {"countryName": "Lebanon", "phoneCode": "961"}, "CG": {"countryName": "Republic of the Congo", "phoneCode": "242"}, "CF": {"countryName": "Central African Republic", "phoneCode": "236"}, "CD": {"countryName": "Democratic Republic of the Congo", "phoneCode": "243"}, "CZ": {"countryName": "Czech Republic", "phoneCode": "420"}, "CY": {"countryName": "Cyprus", "phoneCode": "357"}, "CX": {"countryName": "Christmas Island", "phoneCode": "61"}, "CR": {"countryName": "Costa Rica", "phoneCode": "506"}, "CW": {"countryName": "Curacao", "phoneCode": "599"}, "CV": {"countryName": "Cape Verde", "phoneCode": "238"}, "CU": {"countryName": "Cuba", "phoneCode": "53"}, "SZ": {"countryName": "Swaziland", "phoneCode": "268"}, "SY": {"countryName": "Syria", "phoneCode": "963"}, "SX": {"countryName": "Sint Maarten", "phoneCode": "599"}, "KG": {"countryName": "Kyrgyzstan", "phoneCode": "996"}, "KE": {"countryName": "Kenya", "phoneCode": "254"}, "SS": {"countryName": "South Sudan", "phoneCode": "211"}, "SR": {"countryName": "Suriname", "phoneCode": "597"}, "KI": {"countryName": "Kiribati", "phoneCode": "686"}, "KH": {"countryName": "Cambodia", "phoneCode": "855"}, "KN": {"countryName": "Saint Kitts and Nevis", "phoneCode": "+1-869"}, "KM": {"countryName": "Comoros", "phoneCode": "269"}, "ST": {"countryName": "Sao Tome and Principe", "phoneCode": "239"}, "SK": {"countryName": "Slovakia", "phoneCode": "421"}, "KR": {"countryName": "South Korea", "phoneCode": "82"}, "SI": {"countryName": "Slovenia", "phoneCode": "386"}, "KP": {"countryName": "North Korea", "phoneCode": "850"}, "KW": {"countryName": "Kuwait", "phoneCode": "965"}, "SN": {"countryName": "Senegal", "phoneCode": "221"}, "SM": {"countryName": "San Marino", "phoneCode": "378"}, "SL": {"countryName": "Sierra Leone", "phoneCode": "232"}, "SC": {"countryName": "Seychelles", "phoneCode": "248"}, "KZ": {"countryName": "Kazakhstan", "phoneCode": "7"}, "KY": {"countryName": "Cayman Islands", "phoneCode": "+1-345"}, "SG": {"countryName": "Singapore", "phoneCode": "65"}, "SE": {"countryName": "Sweden", "phoneCode": "46"}, "SD": {"countryName": "Sudan", "phoneCode": "249"}, "DO": {"countryName": "Dominican Republic", "phoneCode": "+1-809 and 1-829"}, "DM": {"countryName": "Dominica", "phoneCode": "+1-767"}, "DJ": {"countryName": "Djibouti", "phoneCode": "253"}, "DK": {"countryName": "Denmark", "phoneCode": "45"}, "VG": {"countryName": "British Virgin Islands", "phoneCode": "+1-284"}, "DE": {"countryName": "Germany", "phoneCode": "49"}, "YE": {"countryName": "Yemen", "phoneCode": "967"}, "DZ": {"countryName": "Algeria", "phoneCode": "213"}, "US": {"countryName": "United States", "phoneCode": "1"}, "UY": {"countryName": "Uruguay", "phoneCode": "598"}, "YT": {"countryName": "Mayotte", "phoneCode": "262"}, "UM": {"countryName": "United States Minor Outlying Islands", "phoneCode": "1"}, "TZ": {"countryName": "Tanzania", "phoneCode": "255"}, "LC": {"countryName": "Saint Lucia", "phoneCode": "+1-758"}, "LA": {"countryName": "Laos", "phoneCode": "856"}, "TV": {"countryName": "Tuvalu", "phoneCode": "688"}, "TW": {"countryName": "Taiwan", "phoneCode": "886"}, "TT": {"countryName": "Trinidad and Tobago", "phoneCode": "+1-868"}, "TR": {"countryName": "Turkey", "phoneCode": "90"}, "LK": {"countryName": "Sri Lanka", "phoneCode": "94"}, "LI": {"countryName": "Liechtenstein", "phoneCode": "423"}, "LV": {"countryName": "Latvia", "phoneCode": "371"}, "TO": {"countryName": "Tonga", "phoneCode": "676"}, "LT": {"countryName": "Lithuania", "phoneCode": "370"}, "LU": {"countryName": "Luxembourg", "phoneCode": "352"}, "LR": {"countryName": "Liberia", "phoneCode": "231"}, "LS": {"countryName": "Lesotho", "phoneCode": "266"}, "TH": {"countryName": "Thailand", "phoneCode": "66"}, "TF": {"countryName": "French Southern Territories", "phoneCode": ""}, "TG": {"countryName": "Togo", "phoneCode": "228"}, "TD": {"countryName": "Chad", "phoneCode": "235"}, "TC": {"countryName": "Turks and Caicos Islands", "phoneCode": "+1-649"}, "LY": {"countryName": "Libya", "phoneCode": "218"}, "VA": {"countryName": "Vatican", "phoneCode": "379"}, "VC": {"countryName": "Saint Vincent and the Grenadines", "phoneCode": "+1-784"}, "AE": {"countryName": "United Arab Emirates", "phoneCode": "971"}, "AD": {"countryName": "Andorra", "phoneCode": "376"}, "AG": {"countryName": "Antigua and Barbuda", "phoneCode": "+1-268"}, "AF": {"countryName": "Afghanistan", "phoneCode": "93"}, "AI": {"countryName": "Anguilla", "phoneCode": "+1-264"}, "VI": {"countryName": "U.S. Virgin Islands", "phoneCode": "+1-340"}, "IS": {"countryName": "Iceland", "phoneCode": "354"}, "IR": {"countryName": "Iran", "phoneCode": "98"}, "AM": {"countryName": "Armenia", "phoneCode": "374"}, "AL": {"countryName": "Albania", "phoneCode": "355"}, "AO": {"countryName": "Angola", "phoneCode": "244"}, "AQ": {"countryName": "Antarctica", "phoneCode": ""}, "AS": {"countryName": "American Samoa", "phoneCode": "+1-684"}, "AR": {"countryName": "Argentina", "phoneCode": "54"}, "AU": {"countryName": "Australia", "phoneCode": "61"}, "VU": {"countryName": "Vanuatu", "phoneCode": "678"}, "AW": {"countryName": "Aruba", "phoneCode": "297"}, "IN": {"countryName": "India", "phoneCode": "91"}, "AX": {"countryName": "Aland Islands", "phoneCode": "+358-18"}, "AZ": {"countryName": "Azerbaijan", "phoneCode": "994"}, "IE": {"countryName": "Ireland", "phoneCode": "353"}, "ID": {"countryName": "Indonesia", "phoneCode": "62"}, "UA": {"countryName": "Ukraine", "phoneCode": "380"}, "QA": {"countryName": "Qatar", "phoneCode": "974"}, "MZ": {"countryName": "Mozambique", "phoneCode": "258"}}
@@ -27,10 +26,10 @@ export const countryNames = {"Afghanistan": {"countryCode": "AF", "phoneCode": "
 })
 export class SignUpPage {
 
-  previousFormLengthOnlyDigits: number;
-
   signUpPhoneForm: FormGroup;
   signUpEmailForm: FormGroup;
+
+  public loading;
 
   phoneInputValue;
 
@@ -41,12 +40,8 @@ export class SignUpPage {
 
   public simInfo;
 
-  public direction: boolean;
-
-
   signUpMethod: string = "phone";
 
-  public recaptchaVerifier:firebase.auth.RecaptchaVerifier;
 
   constructor(
     public navCtrl: NavController,
@@ -56,20 +51,18 @@ export class SignUpPage {
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
     private _afAuth: AngularFireAuth,
-    public userInfo: UserInfoProvider)
+    public phoneInfo: PhoneInfoProvider,)
   {
-    // we only need to initialy define the length of previous.
-    this.previousFormLengthOnlyDigits = 0;
-    this.direction = true;
-    this.phoneInputValue = ''
+    this.phoneInputValue = '';
     this.buildSignUpPhoneForm();
     this.phoneFormValid = false;
 
     this.assignCountryCode();
   }
 
+
   assignCountryCode(){
-    let countryCode = this.userInfo.simCountryCode;
+    let countryCode = this.phoneInfo.simCountryCode;
     if( countryCode ){
       this.phoneCodeValue = countryCodes[countryCode].phoneCode;
       this.countryCodeValue = countryCode;
@@ -81,11 +74,9 @@ export class SignUpPage {
 
 
   ionViewDidLoad() {
-    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
   }
 
   onContinue(){
-    const appVerifier = this.recaptchaVerifier;
     // const phoneNumberString = this.
   }
 
@@ -106,103 +97,11 @@ export class SignUpPage {
    **/
   watchPhoneForm(data?: any) {
     const phoneForm = this.signUpPhoneForm;
-    let phoneFormLength = phoneForm.value.phone.length;
-    let currentFormLengthOnlyDigits: number;
-    console.log("TALLY: " + phoneForm.value.phone.length)
 
-    // if the form hasn't been instantiated, we return.
-    if(!phoneForm){
-      this.phoneFormValid = false;
-      return;
-    } // if the form has a zero length.
-    else if(phoneForm.value.phone.length == 0){
-      currentFormLengthOnlyDigits = 0;
-      this.previousFormLengthOnlyDigits = 0;
-      this.phoneFormValid = false;
-      return;
-    } else if( (phoneForm.value.phone.length == 1) || (phoneForm.value.phone.length == 2) || (phoneForm.value.phone.length == 3) ){
+    if(phoneForm.value.phone.length > 0){
       this.phoneFormValid = true;
-      console.log("The current length is: " + phoneForm.value.phone.length);
-      return;
-    } else {
-      // everything else here
-      currentFormLengthOnlyDigits = this.returnOnlyTelDigits(phoneForm.value.phone);
-      console.log('Current length: ' + currentFormLengthOnlyDigits);
-      console.log('Previous length: ' + this.previousFormLengthOnlyDigits)
-
-      // console.log('The input is positive');
-      if(phoneFormLength == 4){
-        if( currentFormLengthOnlyDigits > this.previousFormLengthOnlyDigits) {
-          let splitValues = phoneForm.value.phone.split('');
-          splitValues.splice(3,0,'-')
-          let returnString = splitValues.join('');
-          this.phoneInputValue = returnString;
-        } else {
-          let splitValues = phoneForm.value.phone.split('');
-          splitValues.splice(3,0)
-          let returnString = splitValues.join('');
-          this.phoneInputValue = returnString;
-
-        }
-      } else if((phoneFormLength == 5) || (phoneFormLength == 6) || (phoneFormLength == 7) || (phoneFormLength == 8)){
-
-        return;
-      } else if(phoneFormLength == 9){
-        if( currentFormLengthOnlyDigits > this.previousFormLengthOnlyDigits) {
-          let splitValues = phoneForm.value.phone.split('');
-          splitValues.splice(0,0,'(');
-          splitValues.splice(4,0,')');
-          splitValues.splice(5,1,' ');
-          splitValues.splice(9,0,'-');
-          let returnString = splitValues.join('');
-          this.phoneInputValue = returnString;
-        } else {
-          return;
-
-        }
-      } else if(phoneFormLength == 11) {
-          let splitValues = phoneForm.value.phone.split('');
-          splitValues.splice(0,1);
-          splitValues.splice(3,2,'-');
-          splitValues.splice(7,1);
-          let returnString = splitValues.join('');
-          this.phoneInputValue = returnString;
-      }
     }
-
-
-    // pass on the formLengthOnlyDigits value for the next function call;
-    if(phoneForm){
-     this.previousFormLengthOnlyDigits = currentFormLengthOnlyDigits;
-    }
-
   }
-
-
-  /*
-   * Returns the length of a string after filtering out everything that's not a digit{0-9}
-   * The regex: https://stackoverflow.com/questions/5963182/how-to-remove-spaces-from-a-string-using-javascript
-   * Checking if a character is a number: https://stackoverflow.com/questions/23437476/in-typescript-how-to-check-if-a-string-is-numeric
-   **/
-  returnOnlyTelDigits(inputString: string) {
-    let returnLength: number = 0;
-
-    // Firstly we remove any whtiespace from the string. ".isNaN()" returns false for whtiespace
-    inputString = inputString.replace(/\s+/g, '');
-
-    for (var i = 0; i < inputString.length; i++) {
-      let characterValue = inputString.charAt(i)
-      // we use '+', the unary plus operator as a shorthand for 'Number(inputString.charAt(i)'' )
-      if( +inputString.charAt(i)){
-        returnLength +=1 ;
-      }
-    }
-    // console.log("Return length is: " + returnLength);
-    return returnLength;
-  }
-
-
- // console.log(s.charAt(i));
 
 
   pickCountryCode(){

@@ -11,13 +11,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
 import { AngularFireAuth } from 'angularfire2/auth';
-// import * as firebase from 'firebase/app';
 
 @Injectable()
-export class UserInfoProvider {
+export class PhoneInfoProvider {
+
+  accessToSim: boolean;
 
   simCountryCode: string;
-
 
   constructor(
     private _afAuth: AngularFireAuth,
@@ -26,6 +26,7 @@ export class UserInfoProvider {
   {
 
   }
+
   init(){
     this.checkAuthState();
   }
@@ -50,15 +51,18 @@ export class UserInfoProvider {
       } else {
         this.sim.getSimInfo().then(
           (info) => {
+            this.accessToSim = true;
             this.simCountryCode = info.countryCode.toUpperCase();
             console.log('Sim info is!!: ' + info.countryCode);
           },
-          (err) => console.log('Unable to get sim info: ', err)
+          (err) => {
+            this.accessToSim = false;
+            console.log('Unable to get sim info: ', err);
+          }
         )
       }
     })
   }
-
 
 
 }

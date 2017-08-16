@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "962335159142",
+    "firebase_url": "https://grouper-688c6.firebaseio.com",
+    "project_id": "grouper-688c6",
+    "storage_bucket": "grouper-688c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962335159142:android:fcde3ea1d8b93056",
+        "android_client_info": {
+          "package_name": "com.grouper.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962335159142-0athdfi4tki0orn2gctbcah0qprdnjek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grouper.app",
+            "certificate_hash": "cbf57f078e75c3363bcbf5a9fd9bf1464b504f8e"
+          }
+        },
+        {
+          "client_id": "962335159142-c5n85n24rn09hdmu4s9i5su1ocmut9nl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf34mB2sAaVFbD8_RVmVJK4Ix7q1F7J3U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "962335159142-c5n85n24rn09hdmu4s9i5su1ocmut9nl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

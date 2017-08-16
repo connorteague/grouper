@@ -1,5 +1,14 @@
 {
   "name": "grouper",
   "app_id": "6051c731",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {},
+    "gulp": {}
+  },
+  "watchPatterns": [],
+  "gulp": {
+    "enabled": true,
+    "file": "gulp.js"
+  }
 }

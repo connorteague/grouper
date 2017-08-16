@@ -9,7 +9,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
-import { UserInfoProvider } from '../providers/user-info/user-info';
+import { PhoneInfoProvider } from '../providers/phone-info/phone-info';
 
 @Component({
   templateUrl: 'app.html'
@@ -27,7 +27,7 @@ export class MyApp {
     public splashScreen: SplashScreen,
     private _afAuth: AngularFireAuth,
     private _afDb: AngularFireDatabase,
-    private userInfo: UserInfoProvider
+    private phoneInfo: PhoneInfoProvider
   )
   {
 
@@ -37,8 +37,8 @@ export class MyApp {
         authListener.unsubscribe()
       } else {
         // this.nav.setRoot('LandingPage');
-        this.nav.setRoot('SignUpPage')
-        authListener.unsubscribe()
+        this.nav.setRoot('LoginPage');
+        authListener.unsubscribe();
       }
     })
 
@@ -59,7 +59,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.userInfo.init();
+      this.phoneInfo.init();
     });
   }
 

@@ -1,0 +1,48 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons end *ngIf="showSkip">
+      <button ion-button (click)="startApp()" color="primary">Skip</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-bounce>
+  <ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager>
+
+    <ion-slide>
+      <!-- <img src="assets/img/ica-slidebox-img-1.png" class="slide-image"/> -->
+      <h2 class="slide-title">
+        Welcome to <b>Grouper</b>
+      </h2>
+      <p>
+        <b>Grouper</b> is a practical way to communicate with the different people in your life.
+      </p>
+    </ion-slide>
+
+    <ion-slide>
+      <!-- <img src="assets/img/ica-slidebox-img-2.png" class="slide-image"/> -->
+      <h2 class="slide-title" >What is Grouper?</h2>
+      <p><b>Grouper</b> is about groups. Each set of people in your life become a different group.</p>
+    </ion-slide>
+
+    <ion-slide>
+      <!-- <img src="assets/img/ica-slidebox-img-3.png" class="slide-image"/> -->
+      <h2 class="slide-title">Is this another group chat app?</h2>
+      <p>No. Groupers has never aimed to be a group chat app. While there is a messaging feature, as our layout suggest, we don't try to promote that as the primary functionality.</p>
+    </ion-slide>
+
+    <ion-slide>
+      <!-- <img src="assets/img/ica-slidebox-img-4.png" class="slide-image"/> -->
+      <h2 class="slide-title">Ready?</h2>
+      <button ion-button icon-end large clear (click)="startApp()">
+        Continue
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-slide>
+
+  </ion-slides>
+</ion-content>
