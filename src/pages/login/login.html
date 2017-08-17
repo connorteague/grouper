@@ -1,18 +1,74 @@
-<!--
-  Generated template for the LoginPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>login</ion-title>
+    <ion-title>Login</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+    <ion-grid>
+      <div padding>
+        <ion-segment [(ngModel)]="loginMethod">
+          <ion-segment-button value="email">
+            Email
+          </ion-segment-button>
+          <ion-segment-button value="phone">
+            Phone
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+  
+      <div [ngSwitch]="loginMethod">
+        <div *ngSwitchCase="'phone'">
+        <form [formGroup]="loginPhoneForm" (submit)="onPhoneLogin()" novalidate>
+          <ion-list>
+            <!-- country code picker -->
+            <ion-item *ngIf="!simAvailable">
+              <ion-label class="countryLabel">Country</ion-label>
+              <!-- <p>{{ countryCodeValue }} {{ phoneCodeValue }}</p> -->
+              <ion-label>
+                <a>United States  (+1)</a>
+              </ion-label>
+              <ion-icon name="arrow-forward" item-end></ion-icon>
+            </ion-item>
+            <!-- phone number input -->
+            <ion-item>
+              <ion-label>Number</ion-label>
+              <ion-input type="text" formControlName="phone" clearInput=true placeholder="phone" class="phone"></ion-input>
+            </ion-item>
+  
+          </ion-list>
+          <p text-center>
+            google wants me to warn you that they are using your phone number for some "spam prevention database"
+          </p>
+          <div text-center>
+            <button ion-button round type="submit" [disabled]="!loginPhoneForm.valid">
+              Login
+            </button>
+          </div>
+        </form>
+        </div>
+  
+        <div *ngSwitchCase="'email'">
+          <form [formGroup]="loginEmailForm" (submit)="onEmailLogin()" novalidate>
+            <ion-item>
+              <ion-input formControlName="email" type="email" placeholder="email"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-input formControlName="password" type="password" placeholder="password"></ion-input>
+              </ion-item>
+            <div text-center>
+              <button ion-button round type="submit" [disabled]="!loginEmailForm.valid">
+                Login
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </ion-grid>
 
 </ion-content>

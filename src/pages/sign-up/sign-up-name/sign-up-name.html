@@ -1,0 +1,32 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>What's your name?</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="nameForm" (submit)="onContinue()" novalidate>
+    <ion-list>
+      <ion-item>
+        <ion-label fixed>First name</ion-label>
+        <ion-input formControlName="firstName" type="text"></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label fixed>Last Name</ion-label>
+        <ion-input formControlName="lastName" type="text"></ion-input>
+      </ion-item>
+    
+    </ion-list>
+    <div text-center>
+      <button ion-button round type="submit" [disabled]="!nameForm.valid">
+        Continue
+      </button>
+    </div>
+  </form>
+
+</ion-content>

@@ -1,18 +1,71 @@
-<!--
-  Generated template for the SignUpPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>sign-up</ion-title>
+    <ion-title>Sign up</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+  <ion-grid>
+      <div padding>
+        <ion-segment [(ngModel)]="signUpMethod">
+          <ion-segment-button value="email">
+            Email
+          </ion-segment-button>
+          <ion-segment-button value="phone">
+            Phone
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+  
+      <div [ngSwitch]="signUpMethod">
+        <div *ngSwitchCase="'phone'">
+        <form [formGroup]="signUpPhoneForm" (submit)="ohPhoneContinue()" novalidate>
+          <ion-list>
+            <!-- country code picker -->
+            <ion-item *ngIf="!simAvailable">
+              <ion-label class="countryLabel">Country</ion-label>
+              <!-- <p>{{ countryCodeValue }} {{ phoneCodeValue }}</p> -->
+              <ion-label>
+                <a>United States  (+1)</a>
+              </ion-label>
+              <ion-icon name="arrow-forward" item-end></ion-icon>
+            </ion-item>
+            <!-- phone number input -->
+            <ion-item>
+              <ion-label>Number</ion-label>
+              <ion-input type="text" formControlName="phone" clearInput=true placeholder="phone" class="phone"></ion-input>
+            </ion-item>
+  
+          </ion-list>
+          <p text-center>
+            google wants me to warn you that they are using your phone number for some "spam prevention database"
+          </p>
+          <div text-center>
+            <button ion-button round type="submit" [disabled]="!signUpPhoneForm.valid">
+              Continue
+            </button>
+          </div>
+        </form>
+        </div>
+  
+        <div *ngSwitchCase="'email'">
+          <form [formGroup]="signUpEmailForm" (submit)="onEmailContinue()" novalidate>
+            <ion-item>
+              <ion-input formControlName="email" type="email" placeholder="email"></ion-input>
+            </ion-item>
+            <div text-center>
+              <button ion-button round type="submit" [disabled]="!signUpEmailForm.valid">
+                Continue
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </ion-grid>
 
 </ion-content>
