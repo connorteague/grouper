@@ -1,13 +1,21 @@
 import { Injectable } from '@angular/core';
 
-import 'rxjs/add/operator/map';
+import { AuthFirebaseProvider } from '../auth-firebase/auth-firebase';
+import { ToastProvider } from '../toast/toast';
 
 
 @Injectable()
 export class AuthProvider {
 
-  constructor() {
+  constructor (private _authFirebase: AuthFirebaseProvider,
+    private _toastCtrl: ToastProvider) {
     
+  }
+
+  logout() {
+    this._authFirebase.logout();
+    this._toastCtrl.logout();
+    // TODO: do anything with the local storage because of logging out.
   }
 
 }

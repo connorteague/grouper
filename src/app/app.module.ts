@@ -1,9 +1,10 @@
+// IMPORT ANGULAR
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -12,16 +13,12 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
-
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { Sim } from '@ionic-native/sim';
-
 import { AuthProvider } from '../providers/auth/auth';
+import { AuthFirebaseProvider } from '../providers/auth-firebase/auth-firebase';
 import { ToastProvider } from '../providers/toast/toast';
-import { UserInfoProvider } from '../providers/user-info/user-info';
 
 
+// Firebase Configuration.
 export const firebaseConfig = {
   apiKey: "AIzaSyAHcTUa4OCQ4Y70vViz9k-3JXGQnE-fAIM",
   authDomain: "grouper-688c6.firebaseapp.com",
@@ -29,21 +26,20 @@ export const firebaseConfig = {
   projectId: "grouper-688c6",
   storageBucket: "grouper-688c6.appspot.com",
   messagingSenderId: "962335159142"
-}
+};
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
+    ListPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -56,9 +52,8 @@ export const firebaseConfig = {
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-    ToastProvider,
-    Sim,
-    UserInfoProvider
+    AuthFirebaseProvider,
+    ToastProvider
   ]
 })
 export class AppModule {}

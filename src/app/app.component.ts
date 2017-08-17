@@ -1,15 +1,13 @@
-import { Component, ViewChild, APP_INITIALIZER } from '@angular/core';
-
+import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase, AngularFireDatabaseProvider } from 'angularfire2/database';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
-import { UserInfoProvider } from '../providers/user-info/user-info';
 
 @Component({
   templateUrl: 'app.html'
@@ -17,32 +15,25 @@ import { UserInfoProvider } from '../providers/user-info/user-info';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any;
+  rootPage: any = HomePage;
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(
-    public platform: Platform,
-    public statusBar: StatusBar,
+  constructor(public platform: Platform,
+    public statusBar:
+    StatusBar,
     public splashScreen: SplashScreen,
     private _afAuth: AngularFireAuth,
-    private _afDb: AngularFireDatabase,
-    private userInfo: UserInfoProvider
-  )
-  {
+    private _afDb: AngularFireDatabase) {
 
     const authListener = _afAuth.authState.subscribe( user => {
-      if (user) {
+      if( user ) {
         this.nav.setRoot(HomePage);
-        authListener.unsubscribe()
       } else {
-        // this.nav.setRoot('LandingPage');
-        this.nav.setRoot('SignUpPage')
-        authListener.unsubscribe()
+        this.nav.setRoot('LandingPage');
       }
-    })
-
-
+    }).unsubscribe();
+    
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -59,7 +50,6 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.userInfo.init();
     });
   }
 
