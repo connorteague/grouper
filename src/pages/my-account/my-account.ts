@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import {  NavController } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 
 import { AuthFirebaseProvider } from '../../providers/auth-firebase/auth-firebase';
 
+
+@IonicPage()
 @Component({
   selector: 'page-my-account',
   templateUrl: 'my-account.html',
@@ -15,9 +17,8 @@ export class MyAccountPage {
   }
 
   ionViewDidLoad() {
-
+    
   }
-
 
   logout() {
     this._authFirebase.logout().then( _ => {

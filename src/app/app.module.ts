@@ -14,10 +14,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-import { MyAccountPage } from '../pages/my-account/my-account';
 
+import { HomeTabsComponent } from '../components/home-tabs/home-tabs';
 
 import { AuthProvider } from '../providers/auth/auth';
 import { AuthFirebaseProvider } from '../providers/auth-firebase/auth-firebase';
@@ -38,9 +36,7 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    ListPage,
-    MyAccountPage
+    HomeTabsComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,9 +49,7 @@ export const firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    ListPage,
-    MyAccountPage
+    HomeTabsComponent,
   ],
   providers: [
     StatusBar,

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { IonicPage, NavController, NavParams, Loading, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, Events, NavController, NavParams, Loading, LoadingController, AlertController } from 'ionic-angular';
 
 import { Storage } from '@ionic/storage';
 
@@ -31,7 +31,8 @@ export class SignUpPasswordPage {
     private signUpProvider: SignUpProvider,
     private _authFirebase: AuthFirebaseProvider,
     private _toastProvider: ToastProvider,
-    public storage: Storage) 
+    public storage: Storage,
+    public events: Events) 
   {
     // constructor stuff.
     this.buildPasswordFrom();

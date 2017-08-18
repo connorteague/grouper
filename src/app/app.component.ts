@@ -1,3 +1,4 @@
+import { LandingPage } from '../pages/landing/landing';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -5,12 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-import { MyAccountPage } from '../pages/my-account/my-account';
-
 import { HomeTabsComponent } from '../components/home-tabs/home-tabs';
-import { MessagesComponent } from '../components/messages/messages';
 
 export interface PageInterface {
   title: string;
@@ -27,29 +23,28 @@ export interface PageInterface {
   templateUrl: 'app.html'
 })
 export class MyApp {
+  // the root nav is a child of the root app component
+  // @ViewChild(Nav) gets a reference to the app's root nav
   @ViewChild(Nav) nav: Nav;
 
   // List of pages that can be navigated to from the left menu
   appPages: PageInterface[] = [
-    {title: 'Groups', name: 'TabsPage', component: HomeTabsComponent, tabComponent: HomePage, index: 0, icon: 'flame'},
-    {title: 'Messages', name: 'TabsPage', component: HomeTabsComponent, tabComponent: MessagesComponent, index: 1, icon: 'chatboxes'},
-    {title: 'My Account', name: 'MyAccountPage', component: MyAccountPage, icon: 'settings'},
+    {title: 'Groups', name: 'HomeTabsComponent', component: HomeTabsComponent, tabComponent: 'HomePage', index: 0, icon: 'logo-css3'},
+    {title: 'Messages', name: 'HomeTabsComponent', component: HomeTabsComponent, tabComponent: 'MessagesPage', index: 1, icon: 'chatboxes'},
+    {title: 'My Account', name: 'MyAccountPage', component: 'MyAccountPage', icon: 'settings'},
   ];
 
   rootPage: any;
 
-
-  // huh?
-  pages: Array<{title: string, component: any}>;
-
-  constructor(public platform: Platform,
+  constructor(
+    public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     private _afAuth: AngularFireAuth) {
 
     const authListener = this._afAuth.authState.subscribe( user => {
       if( user ) {
-        this.nav.setRoot(HomePage);
+        this.nav.setRoot(HomeTabsComponent, {tabIndex: 1});
         authListener.unsubscribe();
       } else {
         this.nav.setRoot('LandingPage');
@@ -58,15 +53,7 @@ export class MyApp {
       }
     })
     
-    this.initializeApp();
-
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage },
-      { title: 'My Account', component: MyAccountPage }
-    ];
-
+    this.initializeApp(); 
   }
 
   initializeApp() {
@@ -93,6 +80,9 @@ export class MyApp {
     // tabs even if changing them from the menu
     if (this.nav.getActiveChildNavs().length && page.index != undefined) {
       this.nav.getActiveChildNavs()[0].select(page.index);
+      console.log('page.index: ' + page.index + ' | ' + 'page.name ' + page.name);
+      console.dir(params);
+      
     // Set the root of the nav with params if it's a tab index
     } else {
       this.nav.setRoot(page.name, params).catch((err: any) => {

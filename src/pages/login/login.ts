@@ -9,6 +9,8 @@ import { ToastProvider } from '../../providers/toast/toast';
 
 import { Storage } from '@ionic/storage';
 
+import { HomeTabsComponent } from '../../components/home-tabs/home-tabs';
+
 import { AuthFirebaseProvider } from '../../providers/auth-firebase/auth-firebase';
 
 
@@ -108,7 +110,8 @@ export class LoginPage {
         this.storage.set('previousEmail', this.loginEmailForm.value.email);
         // navigate to the home page.
         this._toastProvider.login();
-        this.navCtrl.setRoot(HomePage);
+        this.navCtrl.setRoot(HomeTabsComponent, 0);
+        // this.navCtrl.setRoot(HomePage);
         })
       }, error => {
         this.loading.dismiss(_ => {
