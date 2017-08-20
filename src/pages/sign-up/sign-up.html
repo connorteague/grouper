@@ -24,7 +24,7 @@
   
       <div [ngSwitch]="signUpMethod">
         <div *ngSwitchCase="'phone'">
-        <form [formGroup]="signUpPhoneForm" (submit)="ohPhoneContinue()" novalidate>
+        <form [formGroup]="signUpPhoneForm" (submit)="onPhoneContinue()" novalidate>
           <ion-list>
             <!-- country code picker -->
             <ion-item *ngIf="!simAvailable">

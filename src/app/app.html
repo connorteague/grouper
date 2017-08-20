@@ -1,6 +1,6 @@
 <ion-split-pane>
 
-  <ion-menu [content]="content">
+  <ion-menu [content]="content" [enabled]="homeMenuEnabled">
     <ion-header>
       <ion-toolbar>
         <ion-title>Grouper</ion-title>
@@ -18,7 +18,8 @@
 
   </ion-menu>
 
+  <!-- IonNav is the declarative component for a NavController -->
   <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
-  <ion-nav [root]="rootPage" #content swipeBackEnabled="false" main name="Grouper"></ion-nav>
+  <ion-nav [root]="rootPage" #content swipeBackEnabled="false" main name="app"></ion-nav>
 
 </ion-split-pane>

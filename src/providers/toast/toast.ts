@@ -36,4 +36,13 @@ export class ToastProvider {
     toast.present();
   }
 
+  groupCreated() {
+    let toast = this._toastCtrl.create({
+      message: 'Grouop successfully created',
+      duration: 2000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
 }

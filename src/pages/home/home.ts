@@ -1,12 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
 
-/**
- * Generated class for the HomePage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { IonicPage, Nav, NavController, NavParams, Events } from 'ionic-angular';
+
 
 @IonicPage()
 @Component({
@@ -15,11 +10,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  // @ViewChild(Nav) nav: Nav;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public events: Events) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
+  }
+
+  createGroup() {
+    // navigate to the Create Group page.
+    // this.nav.setRoot('CreateGroupPage').then( _ => {
+    this.navCtrl.setRoot('CreateGroupPage').then( _ => {
+      // disable the nav menu.
+      this.events.publish('homeMenu:disable');
+    })
+ 
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { IonicPage, Events, NavController, NavParams, Slides } from 'ionic-angular';
 
 import { Storage } from '@ionic/storage';
 
@@ -21,15 +21,14 @@ export class TutorialPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public storage: Storage) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TutorialPage');
+    public storage: Storage,
+    public events: Events) {
   }
 
   startApp() {
     this.navCtrl.setRoot(HomePage).then(() => {
+      // turtorial is over(or user quit tutorial) lets publish an event to show the main nav menu.
+      this.events.publish('homeMenu:enable');
       this.storage.set('hasSeenTutorial', 'true');
     })
   }

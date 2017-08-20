@@ -15,13 +15,14 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { MyApp } from './app.component';
 
-import { HomeTabsComponent } from '../components/home-tabs/home-tabs';
-
 import { AuthProvider } from '../providers/auth/auth';
 import { AuthFirebaseProvider } from '../providers/auth-firebase/auth-firebase';
 import { ToastProvider } from '../providers/toast/toast';
 import { SimInfoProvider } from '../providers/sim-info/sim-info';
 import { SignUpProvider } from '../providers/sign-up/sign-up';
+import { CreateGroupProvider } from '../providers/create-group/create-group';
+import { GroupsProvider } from '../providers/groups/groups';
+import { LocalStorageSyncProvider } from '../providers/local-storage-sync/local-storage-sync';
 
 // Firebase Configuration.
 export const firebaseConfig = {
@@ -36,7 +37,6 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomeTabsComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +49,6 @@ export const firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomeTabsComponent,
   ],
   providers: [
     StatusBar,
@@ -60,7 +59,10 @@ export const firebaseConfig = {
     AuthFirebaseProvider,
     ToastProvider,
     SimInfoProvider,
-    SignUpProvider
+    SignUpProvider,
+    CreateGroupProvider,
+    GroupsProvider,
+    LocalStorageSyncProvider
   ]
 })
 export class AppModule {}

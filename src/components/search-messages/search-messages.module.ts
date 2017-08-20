@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { IonicModule } from 'ionic-angular';
+import { IonicPageModule } from 'ionic-angular';
 
 import { SearchMessagesComponent } from './search-messages';
 
@@ -9,7 +9,7 @@ import { SearchMessagesComponent } from './search-messages';
     SearchMessagesComponent
   ],
   imports: [
-    IonicModule
+    IonicPageModule.forChild(SearchMessagesComponent)
   ],
   exports: [
     SearchMessagesComponent

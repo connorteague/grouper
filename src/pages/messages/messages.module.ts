@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { MessagesPage } from './messages';
-console.log('Messages Module ran.');
-
 
 @NgModule({
   declarations: [
@@ -11,5 +9,7 @@ console.log('Messages Module ran.');
   imports: [
     IonicPageModule.forChild(MessagesPage),
   ],
+  exports: [
+  ]
 })
 export class MessagesPageModule {}

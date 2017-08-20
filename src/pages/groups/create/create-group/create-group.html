@@ -1,0 +1,44 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only>
+        <ion-icon name="close-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Start a new Group!</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="createGroupForm" (submit)="onSubmit()" novalidate>
+    <ion-list>
+        
+      <ion-item>
+        <ion-label fixed>Group name</ion-label>
+        <ion-input formControlName="name" type="text"></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label>Class</ion-label>
+        <ion-select formControlName="type" interface="popover">
+          <ion-option value="friend">Friend</ion-option>
+          <ion-option value="family">Family</ion-option>
+          <ion-option value="so">Significant other</ion-option>
+          <ion-option value="school">School</ion-option>
+          <ion-option value="work">Work</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <div text-center>
+        <button ion-button round type="submit" [disabled]="!createGroupForm.valid">
+          Continue
+        </button>
+      </div>
+    
+    </ion-list>
+  </form>
+</ion-content>

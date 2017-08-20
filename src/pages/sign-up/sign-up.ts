@@ -20,7 +20,7 @@ export class SignUpPage {
 
   simAvailable: boolean;
 
-  public loading;
+  public loading: Loading;
 
   simInfo;
 
@@ -69,6 +69,7 @@ export class SignUpPage {
       countryCode: ['1']
     })
   }
+
 
   buildEmailForm() {
     this.signUpEmailForm = this._fb.group({

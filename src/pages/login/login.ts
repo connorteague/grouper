@@ -1,17 +1,15 @@
-import { HomePage } from '../home/home';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { IonicPage, NavController, NavParams, Loading, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, Events, NavController, NavParams, Loading, LoadingController, AlertController } from 'ionic-angular';
 
 import { SimInfoProvider } from '../../providers/sim-info/sim-info';
 import { ToastProvider } from '../../providers/toast/toast';
 
 import { Storage } from '@ionic/storage';
 
-import { HomeTabsComponent } from '../../components/home-tabs/home-tabs';
-
 import { AuthFirebaseProvider } from '../../providers/auth-firebase/auth-firebase';
+import { AuthProvider } from '../../providers/auth/auth';
 
 
 @IonicPage()
@@ -42,7 +40,9 @@ export class LoginPage {
     private _simInfoProvider: SimInfoProvider,
     public storage: Storage,
     private _authFirebase: AuthFirebaseProvider,
-    private _toastProvider: ToastProvider
+    private _auth: AuthProvider,
+    private _toastProvider: ToastProvider,
+    public events: Events
   ) {
     this.buildPhoneForm();
     this.buildEmailForm();
@@ -68,6 +68,8 @@ export class LoginPage {
         return;
       } else {
         this.previousEmail = value;
+        console.log('previous email: ' + value);
+        
       }
     }, error => {
       console.log('no previous email.');
@@ -80,6 +82,7 @@ export class LoginPage {
     }
   }
 
+
   buildEmailForm() {
     this.loginEmailForm = this._fb.group({
       email: [this.previousEmail, [
@@ -90,12 +93,14 @@ export class LoginPage {
     })
   }
 
+
   buildPhoneForm() {
     this.loginPhoneForm = this._fb.group({
       phone: ['', Validators.required],
       countryCode: ['1']
     })
   }
+
 
   onEmailLogin() {
     if (this.loginEmailForm.invalid) {
@@ -110,8 +115,10 @@ export class LoginPage {
         this.storage.set('previousEmail', this.loginEmailForm.value.email);
         // navigate to the home page.
         this._toastProvider.login();
-        this.navCtrl.setRoot(HomeTabsComponent, 0);
-        // this.navCtrl.setRoot(HomePage);
+        // publish the event
+        this._auth.login();
+        // If we don't specify a paramater when navigating to the 'HomeTabsComponent', tab1 is the default.
+        this.navCtrl.setRoot('HomeTabsComponent');
         })
       }, error => {
         this.loading.dismiss(_ => {

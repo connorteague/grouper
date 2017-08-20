@@ -56,7 +56,7 @@
         <div *ngSwitchCase="'email'">
           <form [formGroup]="loginEmailForm" (submit)="onEmailLogin()" novalidate>
             <ion-item>
-              <ion-input formControlName="email" type="email" placeholder="email"></ion-input>
+              <ion-input formControlName="email" type="email" [value]="previousEmail" placeholder="email"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-input formControlName="password" type="password" placeholder="password"></ion-input>

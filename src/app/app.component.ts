@@ -1,12 +1,10 @@
-import { LandingPage } from '../pages/landing/landing';
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+
+import { Events, Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { AngularFireAuth } from 'angularfire2/auth';
-
-import { HomeTabsComponent } from '../components/home-tabs/home-tabs';
 
 export interface PageInterface {
   title: string;
@@ -29,10 +27,12 @@ export class MyApp {
 
   // List of pages that can be navigated to from the left menu
   appPages: PageInterface[] = [
-    {title: 'Groups', name: 'HomeTabsComponent', component: HomeTabsComponent, tabComponent: 'HomePage', index: 0, icon: 'logo-css3'},
-    {title: 'Messages', name: 'HomeTabsComponent', component: HomeTabsComponent, tabComponent: 'MessagesPage', index: 1, icon: 'chatboxes'},
+    {title: 'Groups', name: 'HomeTabsPage', component: 'HomeTabsPage', tabComponent: 'HomePage', index: 0, icon: 'logo-css3'},
+    {title: 'Messages', name: 'HomeTabsPage', component: 'HomeTabsPage', tabComponent: 'MessagesPage', index: 1, icon: 'chatboxes'},
     {title: 'My Account', name: 'MyAccountPage', component: 'MyAccountPage', icon: 'settings'},
   ];
+
+  homeMenuEnabled: boolean;
 
   rootPage: any;
 
@@ -40,13 +40,16 @@ export class MyApp {
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    private _afAuth: AngularFireAuth) {
+    private _afAuth: AngularFireAuth,
+    public events: Events) {
 
     const authListener = this._afAuth.authState.subscribe( user => {
       if( user ) {
-        this.nav.setRoot(HomeTabsComponent, {tabIndex: 1});
+        this.nav.setRoot('HomeTabsPage');
+        this.homeMenuEnabled = true;
         authListener.unsubscribe();
       } else {
+        this.homeMenuEnabled = false;
         this.nav.setRoot('LandingPage');
         // this.nav.setRoot(HomePage);
         authListener.unsubscribe();
@@ -54,6 +57,8 @@ export class MyApp {
     })
     
     this.initializeApp(); 
+
+    this.listenToLoginEvents();
   }
 
   initializeApp() {
@@ -65,6 +70,24 @@ export class MyApp {
     });
   }
 
+  listenToLoginEvents() {
+    this.events.subscribe('user:login', () => {
+      this.homeMenuEnabled = true;
+    });
+    this.events.subscribe('user:signup', () => {
+      this.homeMenuEnabled = true;
+    });
+    this.events.subscribe('user:logout', () => {
+      this.homeMenuEnabled = false;
+    });
+    this.events.subscribe('homeMenu:enable', () => {
+      this.homeMenuEnabled = true;
+    });
+    this.events.subscribe('homeMenu:disable', () =>{
+      this.homeMenuEnabled = false;
+    })
+  }
+
   openPage(page: PageInterface) {
     let params = {};
 
@@ -74,23 +97,25 @@ export class MyApp {
     if (page.index) {
       params = { tabIndex: page.index };
     }
+    // console.log('active child navs: ' + this.nav.getActiveChildNavs().length);
 
     // If we are already on tabs just change the selected tab
     // don't setRoot again, this maintains the history stack of the
     // tabs even if changing them from the menu
     if (this.nav.getActiveChildNavs().length && page.index != undefined) {
+      // NOTE: this is where I will need to specify an ID of the activeChildNav, in this case the tab controller.
+      // '0' is a reference to the first item in the list returned from 'getActiveChildNave(), I will need to replace 
+      // 0 with a variable that connects it to a spscific tab/nav controller.
       this.nav.getActiveChildNavs()[0].select(page.index);
-      console.log('page.index: ' + page.index + ' | ' + 'page.name ' + page.name);
-      console.dir(params);
+      // console.log('page.index: ' + page.index + ' | ' + 'page.name ' + page.name);
+      // console.dir(params);
       
     // Set the root of the nav with params if it's a tab index
     } else {
-      this.nav.setRoot(page.name, params).catch((err: any) => {
-        console.log(`Didn't set nav root: ${err}`);
+      this.nav.setRoot(page.component, params).catch((err: any) => {
+        // console.log(`Didn't set nav root: ${err}`);
       });
     }
-
-    this.nav.setRoot(page.component);
   }
 
 

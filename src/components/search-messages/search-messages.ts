@@ -1,19 +1,27 @@
 import { Component } from '@angular/core';
 
-import { ViewController } from 'ionic-angular';
+import { ViewController, App, IonicPage } from 'ionic-angular';
 
+@IonicPage()
 @Component({
   selector: 'search-messages',
   templateUrl: 'search-messages.html'
 })
 export class SearchMessagesComponent {
 
-  text: string;
+  searchResults;
 
   constructor(
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public appCtrl: App
   ) {
   }
+
+  // Use 
+  // this.appCtrl.getRootNav();
+  // to get a reference to the current NavController.
+
+  
 
   search($event) {
     
