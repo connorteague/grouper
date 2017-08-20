@@ -1,3 +1,4 @@
+import { GroupedObservable } from 'rxjs/operator/groupBy';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -8,6 +9,8 @@ import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/data
 import * as firebase from 'firebase/app';
 
 import { ToastProvider } from '../../../../providers/toast/toast';
+
+import { GroupsProvider } from '../../../../providers/groups/groups';
 
 import { Storage } from '@ionic/storage';
 
@@ -33,14 +36,15 @@ export class CreateGroupPage {
     public storage: Storage,
     private _toastProvider: ToastProvider,
     public events: Events,
-    public app: App)
+    public app: App,
+    public groupsProvider: GroupsProvider)
   {
     this.buildGroupForm();
   }
 
   ionViewDidLoad() {
-    console.log('active navs are: ' );
-    console.dir(this.app.getActiveNavs());
+    // console.log('active navs are: ' );
+    // console.dir(this.app.getActiveNavs());
     
   }
 
@@ -60,7 +64,21 @@ export class CreateGroupPage {
       // do something then return.
       return;
     } else {
-      this.navCtrl.push('AddGroupLocationPage', {title: ''});
+      this.groupsProvider.createGroup(this.createGroupForm.value.name, this.createGroupForm.value.type).then( _ => {
+        console.log('group was created.');
+        this.loading.dismiss();
+      }, error => {
+        this.loading.dismiss().then( _ => {
+          let alert = this.alertCtrl.create({
+            title: error.name,
+            subTitle: error.message,
+            buttons: ['Dismiss']
+          });
+          alert.present();
+        })
+      });
+      this.loading = this.loadingCtrl.create();
+      this.loading.present();
     }
   }
 

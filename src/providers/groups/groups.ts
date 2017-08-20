@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PACKAGE_ROOT_URL } from '@angular/core';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
@@ -19,17 +19,22 @@ export class GroupsProvider {
   }
 
   createGroup(name: string, type: string): firebase.Promise<any> {
+    // user id
+    const userId = this._afAuth.auth.currentUser.uid;
     // get the group push ID
     let groupRef = firebase.database().ref('groups').push();
-    
+
+    console.log('groupRef.key: ' + groupRef.key);
     // set group info
-    groupRef.set({
+    return groupRef.set({
       name: name,
       type: type
-    }).then( newGroup => {
-      this._toastProvider.groupCreated();
-    })
-    return;
+    }).then( _ => {
+      console.log('groupRef.set worked');
+      this._afDb.object('userGroups/' + userId).update({
+        [groupRef.key]: true
+      });
+    });
   }
   // once I learn more about picture formats and such, I should take a look at this again.
   setGroupPicture(picture: any): firebase.Promise<any> {

@@ -15,14 +15,14 @@ export class HomeTabsPage {
   mySelectedIndex: number;
 
   constructor(public navParams: NavParams) {
-    console.log("_navParams.data.tabIndex: " + navParams.get('tabIndex'));
+    // console.log("_navParams.data.tabIndex: " + navParams.get('tabIndex'));
     
     this.mySelectedIndex = navParams.data.tabIndex || 0;
-    console.log('mySelectedIndex: ' + this.mySelectedIndex);
+    // console.log('mySelectedIndex: ' + this.mySelectedIndex);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HomeTabsPage');
+    // console.log('ionViewDidLoad HomeTabsPage');
   }
 
 }
