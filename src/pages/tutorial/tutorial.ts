@@ -4,8 +4,6 @@ import { IonicPage, Events, NavController, NavParams, Slides } from 'ionic-angul
 
 import { Storage } from '@ionic/storage';
 
-import { HomePage } from '../home/home';
-
 
 @IonicPage()
 @Component({
@@ -26,7 +24,7 @@ export class TutorialPage {
   }
 
   startApp() {
-    this.navCtrl.setRoot(HomePage).then(() => {
+    this.navCtrl.setRoot('HomeTabsPage').then(() => {
       // turtorial is over(or user quit tutorial) lets publish an event to show the main nav menu.
       this.events.publish('homeMenu:enable');
       this.storage.set('hasSeenTutorial', 'true');

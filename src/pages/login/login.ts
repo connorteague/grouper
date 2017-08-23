@@ -118,7 +118,7 @@ export class LoginPage {
         // publish the event
         this._auth.login();
         // If we don't specify a paramater when navigating to the 'HomeTabsComponent', tab1 is the default.
-        this.navCtrl.setRoot('HomeTabsComponent');
+        this.navCtrl.setRoot('HomeTabsPage');
         })
       }, error => {
         this.loading.dismiss(_ => {

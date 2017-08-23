@@ -5,6 +5,9 @@
       </button>
       <ion-title>Grouper</ion-title>
       <ion-buttons end>
+          <button (click)="openSearchModal()" ion-button icon-only>
+            <ion-icon name="search"></ion-icon>
+          </button>
           <button (click)='createGroup()' ion-button icon-only color="royal">
             <ion-icon name="md-add-circle"></ion-icon>
           </button>
@@ -12,8 +15,18 @@
     </ion-navbar>
   </ion-header>
   
-  <ion-content padding>
-    This is the home page.
+  <ion-content>
+
+    <!-- GROUPS -->
+    <ion-list>
+      <ion-item *ngFor="let group of userGroups | async" (click)="openGroup(group)">
+        <!-- <ion-thumbnail item-start>
+          <img src="img/thumbnail-totoro.png">
+        </ion-thumbnail> -->
+        <h2>{{ group?.name }}</h2>
+        
+        <button ion-button clear item-end>View</button>
+      </ion-item>
+    </ion-list>
   
   </ion-content>
-  

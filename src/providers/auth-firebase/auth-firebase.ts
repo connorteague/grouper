@@ -16,6 +16,10 @@ export class AuthFirebaseProvider {
     
   }
 
+  getUserId() {
+
+  }
+
   getUser():firebase.User {
     return this._afAuth.auth.currentUser;
   }

@@ -1,3 +1,9 @@
+
+
+// SUCK MY DICK
+// we miss you guys.
+
+
 // IMPORT ANGULAR
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -23,6 +29,7 @@ import { SignUpProvider } from '../providers/sign-up/sign-up';
 import { CreateGroupProvider } from '../providers/create-group/create-group';
 import { GroupsProvider } from '../providers/groups/groups';
 import { LocalStorageSyncProvider } from '../providers/local-storage-sync/local-storage-sync';
+import { HomePageProvider } from '../providers/home-page/home-page';
 
 // Firebase Configuration.
 export const firebaseConfig = {
@@ -62,7 +69,8 @@ export const firebaseConfig = {
     SignUpProvider,
     CreateGroupProvider,
     GroupsProvider,
-    LocalStorageSyncProvider
+    LocalStorageSyncProvider,
+    HomePageProvider
   ]
 })
 export class AppModule {}

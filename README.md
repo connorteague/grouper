@@ -1,26 +1,59 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+This is the project I use to learn/test things. And it better make me millions one day.
 
-## How to use this template
+## What this project uses.
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+[Angular](https://angular.io/docs)
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
+[Ionic](https://ionicframework.com/docs/)
 
-### With the Ionic CLI:
+## What you need to download first.
 
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+1. [nodeJs](https://nodejs.org/en/download/)
 
+1. a) update npm with
+Incase you don't know, when typing your password inside bash, nothing will show up on the screen.
 ```bash
-$ sudo npm install -g ionic cordova
-$ ionic start mySideMenu sidemenu
+$ sudo npm install npm -g
 ```
 
-Then, to run it, cd into `mySideMenu` and run:
-
+2. [Ionic cli and cordova]
 ```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
+$ npm install -g ionic cordova
 ```
 
-Substitute ios for android if not on a Mac.
+3. You should probably install angular as well
+```bash
+$ npm npm install -g @angular/cli
+```
+
+4. [Git Cli](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+
+Also, make a Git account with the email you gave me earlier.
+
+After you downloaded the Git cli, AND made a git account.
+
+[Cache your GitHub password].
+
+
+### TEXT editor.
+I don't know what you have already, but you should either get [Atom](https://atom.io/) or [VisualStudio Code](https://code.visualstudio.com/).
+I have used atom for the past year, but I just switched over to VS Code. Not sure I'll stick with it though, so make your own descision here.
+
+
+### When you think you're ready to clone this repo.
+
+
+run this command from inside the directory you want to save this repo in.
+```bash
+$ git clone https://github.com/kevintowe/grouper.git
+$
+$ cd grouper
+$
+$ npm install
+$
+$ ionic serve
+
+```
+
+
 

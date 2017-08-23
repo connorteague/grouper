@@ -19,22 +19,28 @@ admin.initializeApp(functions.config().firebase);
 
 
 // we watch the 'userGroups' node for onCreate and onDelete events.
-exports.watchUserGroups = functions.database.ref('userGroups/{userId}').onCreate( event => {
+exports.watchNewUserGroups = functions.database.ref('userGroups/{userId}').onWrite( event => {
     // grab the current value of what was added to the Realtime Database.
     const original = event.data.val();
     console.log('Processing:' + event.params.userId, original)
     // we need the userId and the group push id to continue.
     const userId = event.params.userId;
     console.log('user id is: ' + userId);
-    // const groupId = event.key;
+    const groupId = '';
     // console.log('event.key: ' + event.key); // undefiened
-    console.log('original is: ');
-    console.dir(original);
 
-    console.log('original.key : ' + original.key);
+    console.log('original is: ' + original);
+    console.log('please be group id: ' + original.key);
+    return;
+
+    // console.log('original.key : ' + original.key);
     // we update the 'localStorageSync/{userId}' node to reflect the newly created group.
 
     // admin.database.ref('localStorageSync/' + userId).update({
     //     groups: {[groupId]: original}
     // });
+
+    // return event.data.ref.root.child('localStorageSync/{userId').update({
+    //     groups: {[groupId]: }
+    // })
 });

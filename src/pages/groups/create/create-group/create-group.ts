@@ -1,8 +1,9 @@
+import { log } from 'util';
 import { GroupedObservable } from 'rxjs/operator/groupBy';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { IonicPage, ModalController, App, Events, NavController, NavParams, Loading, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, ModalController, Events, NavController, NavParams, Loading, LoadingController, AlertController, ViewController, App } from 'ionic-angular';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
@@ -36,8 +37,9 @@ export class CreateGroupPage {
     public storage: Storage,
     private _toastProvider: ToastProvider,
     public events: Events,
-    public app: App,
-    public groupsProvider: GroupsProvider)
+    public appCtrl: App,
+    public groupsProvider: GroupsProvider,
+    public viewCtrl: ViewController)
   {
     this.buildGroupForm();
   }
@@ -64,9 +66,17 @@ export class CreateGroupPage {
       // do something then return.
       return;
     } else {
-      this.groupsProvider.createGroup(this.createGroupForm.value.name, this.createGroupForm.value.type).then( _ => {
+      this.groupsProvider.createGroup(this.createGroupForm.value.name, this.createGroupForm.value.type).then( newGroup => {
         console.log('group was created.');
-        this.loading.dismiss();
+        // dismiss the lodaing controller
+        this.loading.dismiss().then( _ => {
+          // 1. dismiss the modal.
+          this.viewCtrl.dismiss();
+          // 2. Use the appCtrl to navigate from the modal.
+          this.appCtrl.getRootNav().push('GroupTabsPage', newGroup);
+          // what does .getRootNav() return?
+          console.log("this.appCtrl.getRootNav() : "  + this.appCtrl.getRootNav());
+        })        
       }, error => {
         this.loading.dismiss().then( _ => {
           let alert = this.alertCtrl.create({
@@ -80,6 +90,16 @@ export class CreateGroupPage {
       this.loading = this.loadingCtrl.create();
       this.loading.present();
     }
+  }
+
+  cancel() {
+    this.navCtrl.pop().then(_ => {
+      this.events.publish('homeMenu:enable');
+    }, error => {
+      this.navCtrl.setRoot('HomeTabsPage').then(_ => {
+        this.events.publish('homeMenu:enable');
+      })
+    })
   }
 
 

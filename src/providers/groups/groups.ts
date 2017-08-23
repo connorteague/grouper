@@ -4,18 +4,32 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 
+import { Events } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+
 import { ToastProvider } from '../toast/toast';
 
 
 @Injectable()
 export class GroupsProvider {
 
+  currentGroup: FirebaseObjectObservable<any>;
+
   constructor(
     private _afAuth: AngularFireAuth,
     private _afDb: AngularFireDatabase,
-    private _toastProvider: ToastProvider
+    private _toastProvider: ToastProvider,
+    public events: Events
   ) {
+    this.listenToEvents();
     
+  }
+
+  listenToEvents() {
+    this.events.subscribe('group:selected', (groupId) => {
+      this.currentGroup = this._afDb.object(`groups/${groupId}`);
+    });
+ 
   }
 
   createGroup(name: string, type: string): firebase.Promise<any> {
@@ -30,9 +44,11 @@ export class GroupsProvider {
       name: name,
       type: type
     }).then( _ => {
-      console.log('groupRef.set worked');
       this._afDb.object('userGroups/' + userId).update({
-        [groupRef.key]: true
+        [groupRef.key]: {
+          name: name,
+          type: type,
+        }
       });
     });
   }

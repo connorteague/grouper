@@ -1,0 +1,34 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ (currentGroup | async)?.name }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list reorder="true">
+    <ion-item-sliding>
+      <ion-item>
+        <ion-icon name="people" item-start></ion-icon>
+          Members
+      </ion-item>
+      <ion-item-options side="left">
+          <button ion-button color="primary">
+            <ion-icon name="chatboxes"></ion-icon>
+            Message
+          </button>
+          <button ion-button color="secondary">
+            <ion-icon name="logo-vimeo"></ion-icon>
+            Venmo
+          </button>
+        </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+</ion-content>
