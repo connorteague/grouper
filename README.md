@@ -11,12 +11,11 @@ This is the project I use to learn/test things. And it better make me millions o
 1. [nodeJs](https://nodejs.org/en/download/)
 
 1. a) update npm with
-Incase you don't know, when typing your password inside bash, nothing will show up on the screen.
 ```bash
 $ sudo npm install npm -g
 ```
 
-2. [Ionic cli and cordova]
+2. Ionic cli and cordova
 ```bash
 $ npm install -g ionic cordova
 ```
@@ -32,7 +31,7 @@ Also, make a Git account with the email you gave me earlier.
 
 After you downloaded the Git cli, AND made a git account.
 
-[Cache your GitHub password].
+[Cache your GitHub password](https://help.github.com/articles/caching-your-github-password-in-git/);
 
 
 ### TEXT editor.
